@@ -13,8 +13,9 @@ struct patientDetails
 struct patientDetails patients[100];
 int patientCount = 0;
 
-void displaySpecialtyID();
+int displaySpecialtyID();
 void registerNewPatient();
+void viewPatientsRecords();
 
 int main()
 {
@@ -37,11 +38,10 @@ int main()
 
         switch (choice) {
             case 1:
-                printf("\n[System] Registration coming in Phase 2!\n");
                 registerNewPatient();
                 break;
             case 2:
-                printf("\n[System] Queue view coming soon!\n");
+                viewPatientsRecords();
                 break;
             case 3:
                 printf("\n[System] Analytics coming soon!\n");
@@ -51,6 +51,8 @@ int main()
                 break;
             default:
                 printf("\n[Error] Invalid choice! Try again.\n");
+
+
         }
     } while (choice != 4);
 
@@ -60,7 +62,7 @@ int main()
 
     return 0;
 }
-void displaySpecialtyID()
+int displaySpecialtyID()
 {
     int choice = 0;
     printf(" General Practice (OPD): 1\n");
@@ -69,6 +71,7 @@ void displaySpecialtyID()
     printf(" Neurology             : 4\n");
     printf(" Enter your choice: ");
     scanf("%d", &choice);
+    return choice;
 
 }
 void registerNewPatient()
@@ -83,14 +86,39 @@ void registerNewPatient()
     printf("Enter Patient ID: ");
     scanf("%s", p.patientID);
 
+    printf("Enter Patient Name: ");
+    scanf("%s", p.patientFullName);
+
     printf("Enter Age: ");
     scanf("%d", &p.patientAge);
-    displaySpecialtyID();
 
-    p.billAmount = 0.0;
+    p.urgencyLevel = displaySpecialtyID();
+
+    p.billAmount = 1500.0;
 
     patients[patientCount] = p;
     patientCount++;
     printf("[Success] Patient registered! Total registered: %d\n",
            patientCount);
+}
+void viewPatientsRecords()
+{
+    if (patientCount == 0)
+    {
+        printf("No patient records found\n");
+    }
+  else
+  {
+      for (int i = 0; i < patientCount ; i++)
+      {
+      printf(" Registered patients records \n");
+      printf(" Record #%d\n", i + 1);
+        printf("Patient ID      : %s\n", patients[i].patientID);
+        printf("Patient Name    : %s\n", patients[i].patientFullName);
+        printf("Age             : %d Years\n", patients[i].patientAge);
+        printf("Urgency Level   : %d\n", patients[i].urgencyLevel);
+        printf("Base Bill Amount: LKR %.2f\n", patients[i].billAmount);
+
+  }
+}
 }
