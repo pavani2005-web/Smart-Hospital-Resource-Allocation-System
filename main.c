@@ -18,7 +18,6 @@ struct patientDetails
     double grossTotal;
     double discount;
     double finalPayable;
-
 };
 struct patientDetails patients[100];
 int patientCount = 0;
@@ -56,7 +55,9 @@ int main()
                 displayBillingAndReport();
                 break;
             case 4:
-                printf("\nExiting system. Goodbye!\n");
+                printf("\n     ==============================================\n");
+                printf("       Thank you for using Smart Hospital System!\n");
+                printf("     ==============================================\n");
                 break;
             default:
                 printf("\n[Error] Invalid choice! Try again.\n");
@@ -188,7 +189,7 @@ void displayBillingAndReport()
     double totalRevenue = 0.0;
     double totalDiscounts = 0.0;
     double totalSurcharges = 0.0;
-    int totalAdmitted = 0.0;
+    int totalAdmitted = 0;
 
     for ( int i = 0; i < patientCount; i++)
     {
