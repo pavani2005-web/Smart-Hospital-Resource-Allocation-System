@@ -33,15 +33,15 @@ int main()
     int specialtyID = 0;
 
     do {
-        printf("\n==================================================\n");
-        printf("    SMART HOSPITAL & RESOURCE ALLOCATION SYSTEM   \n");
-        printf("==================================================\n");
-        printf("1. Register New Patient\n");
-        printf("2. View Patient Records\n");
-        printf("3. Display Hospital Billing & Reports\n");
-        printf("4. Exit System\n");
-        printf("--------------------------------------------------\n");
-        printf("Enter choice (1-4): ");
+        printf("\n\t==================================================\n");
+        printf("\t    SMART HOSPITAL & RESOURCE ALLOCATION SYSTEM   \n");
+        printf("\t==================================================\n");
+        printf("\t1. Register New Patient\n");
+        printf("\t2. View Patient Records\n");
+        printf("\t3. Display Hospital Billing & Reports\n");
+        printf("\t4. Exit System\n");
+        printf("\t==================================================\n");
+        printf("\n\tEnter choice (1-4): ");
         scanf("%d", &choice);
 
         switch (choice) {
@@ -55,12 +55,12 @@ int main()
                 displayBillingAndReport();
                 break;
             case 4:
-                printf("\n     ==============================================\n");
-                printf("       Thank you for using Smart Hospital System!\n");
-                printf("     ==============================================\n");
+                printf("\t=============================================\n");
+                printf("\t  Thank you for using Smart Hospital System!\n");
+                printf("\t=============================================\n");
                 break;
             default:
-                printf("\n[Error] Invalid choice! Try again.\n");
+                printf("\n\n\t[Error] Invalid choice! Try again.\n");
         }
     } while (choice != 4);
 
@@ -70,18 +70,21 @@ int displaySpecialtyID()
 {
     int choice = 0;
     do {
-            printf(" 1. General Practice (OPD) - LKR 1500.00\n");
-            printf(" 2. Paediatrics            - LKR 2500.00\n");
-            printf(" 3. Cardiology             - LKR 4500.00\n");
-            printf(" 4. Neurology              - LKR 5000.00\n");
+            printf("\n\t    Doctor Specialties Data     \n\n");
+            printf("\t 1. General Practice (OPD) - LKR 1500.00\n");
+            printf("\t 2. Paediatrics            - LKR 2500.00\n");
+            printf("\t 3. Cardiology             - LKR 4500.00\n");
+            printf("\t 4. Neurology              - LKR 5000.00\n");
+
+            printf("\n\t Enter choice: ");
 
     if (scanf("%d", &choice) != 1) {
-            printf("\n[Error] Please enter a valid number!\n\n");
+            printf("\n\n\t[Error] Please enter a valid number!\n\n");
             while (getchar() != '\n');
             choice = 0;
         }
         else if (choice < 1 || choice > 4) {
-            printf("\n[Error] Invalid choice! Choose between 1 and 4.\n\n");
+            printf("\n\n\t[Error] Invalid choice! Choose between 1 and 4.\n\n");
         }
     }
      while (choice < 1 || choice > 4);
@@ -93,21 +96,23 @@ void registerNewPatient()
 {
     if (patientCount >= 100)
     {
-        printf(" Error: Database full!\n");
+        printf("\n\n\tError: Database full!\n");
         return;
 
     }
     struct patientDetails p;
-    printf("Enter Patient ID: ");
+    printf("\n\tEnter Patient ID  : ");
     scanf("%s", p.patientID);
 
-    printf("Enter Patient Name: ");
+    printf("\tEnter Patient Name: ");
     scanf("%s", p.patientFullName);
 
-    printf("Enter Age: ");
+    printf("\tEnter Age         : ");
     scanf("%d", &p.patientAge);
 
-    printf("Enter Urgency Level (1 = Normal, 2 = Urgent, 3 = Critical): ");
+    printf("\n\t  Urgency Level\n");
+    printf("\t1 = Normal \n\t2 = Urgent \n\t3 = Critical");
+    printf("\n\tEnter Urgency Level (1 - 3): ");
     scanf("%d", &p.urgencyLevel);
 
     p.specialtyID = displaySpecialtyID();
@@ -128,13 +133,15 @@ void registerNewPatient()
     }
 
     // 3. Ward Admission
-    printf("Is Patient Admitted to Ward? (1 = Yes, 0 = No): ");
+    printf("\n\tIs Patient Admitted to Ward? (1 = Yes, 0 = No): ");
     scanf("%d", &p.isAdmitted);
 
     if (p.isAdmitted == 1) {
-        printf("Select Ward (1-General: 3000/day, 2-Paediatric: 6000/day, 3-Surgical: 12000/day, 4-ICU: 25000/day): ");
+        printf("\n\t   Ward details\n");
+        printf("\t1-General: 3000/day \n\t2-Paediatric: 6000/day \n\t3-Surgical: 12000/day \n\t4-ICU: 25000/day\n");
+        printf("\n\tSelect Ward : ");
         scanf("%d", &p.wardID);
-        printf("Enter Days Admitted: ");
+        printf("\tEnter Days Admitted: ");
         scanf("%d", &p.admittedDays);
 
         double dailyRate = 0.0;
@@ -173,20 +180,22 @@ void viewPatientsRecords()
   {
       for (int i = 0; i < patientCount ; i++)
       {
-      printf(" Registered patients records \n");
-      printf(" Record #%d\n", i + 1);
-        printf("Patient ID      : %s\n", patients[i].patientID);
-        printf("Patient Name    : %s\n", patients[i].patientFullName);
-        printf("Age             : %d Years\n", patients[i].patientAge);
-        printf("Urgency Level   : %d\n", patients[i].urgencyLevel);
-        printf("Base Bill Amount: LKR %.2f\n", patients[i].finalPayable);
+        printf("\n\t=========================================\n");
+        printf("\t       Registered patients records ");
+        printf("\n\t=========================================\n");
+        printf("\t Record #%d\n", i + 1);
+        printf("\tPatient ID      : %s\n", patients[i].patientID);
+        printf("\tPatient Name    : %s\n", patients[i].patientFullName);
+        printf("\tAge             : %d Years\n", patients[i].patientAge);
+        printf("\tUrgency Level   : %d\n", patients[i].urgencyLevel);
+        printf("\tBase Bill Amount: LKR %.2f\n", patients[i].finalPayable);
 
-        printf("Base Consultation Fee: LKR %.2f\n", patients[i].baseFee);
-        printf("Emergency Surcharge  : LKR %.2f\n", patients[i].emergencySurcharge);
-        printf("Ward Stay Cost       : LKR %.2f (%d Days)\n", patients[i].wardCost, patients[i].admittedDays);
-        printf("Gross Total Bill     : LKR %.2f\n", patients[i].grossTotal);
-        printf("Age Subsidy Discount : LKR -%.2f\n", patients[i].discount);
-        printf("Final Amount Payable : LKR %.2f\n", patients[i].finalPayable);
+        printf("\tBase Consultation Fee: LKR %.2f\n", patients[i].baseFee);
+        printf("\tEmergency Surcharge  : LKR %.2f\n", patients[i].emergencySurcharge);
+        printf("\tWard Stay Cost       : LKR %.2f (%d Days)\n", patients[i].wardCost, patients[i].admittedDays);
+        printf("\tGross Total Bill     : LKR %.2f\n", patients[i].grossTotal);
+        printf("\tAge Subsidy Discount : LKR -%.2f\n", patients[i].discount);
+        printf("\tFinal Amount Payable : LKR %.2f\n", patients[i].finalPayable);
 
   }
 }
@@ -195,7 +204,7 @@ void displayBillingAndReport()
 {
     if (patientCount == 0)
     {
-        printf(" No patients records\n");
+        printf("\tNo patients records\n");
         return;
     }
     double totalRevenue = 0.0;
@@ -213,11 +222,14 @@ void displayBillingAndReport()
                 totalAdmitted++;
                 }
     }
-    printf(" Final report\n");
-    printf("Total Patients Registered: %d\n", patientCount);
-    printf("Total Admitted Patients: %d\n", totalAdmitted);
-    printf("Total outpatients: %d\n", patientCount - totalAdmitted);
-    printf("Total Surcharges & Discounts: %.2lf  %.2lf\n", totalSurcharges, totalDiscounts);
-    printf("Total Net Revenue: %.2lf\n", totalRevenue);
-    printf("Average Payable per Patient: %.2lf\n", totalRevenue/patientCount);
+    printf("\n\t=========================================\n");
+    printf("\n\t          Final report\n");
+    printf("\n\t=========================================\n");
+    printf("\tTotal Patients Registered   : %d\n", patientCount);
+    printf("\tTotal Admitted Patients     : %d\n", totalAdmitted);
+    printf("\tTotal outpatients           : %d\n", patientCount - totalAdmitted);
+    printf("\tTotal Surcharges & Discounts: %.2lf  %.2lf\n", totalSurcharges, totalDiscounts);
+    printf("\tTotal Net Revenue           : %.2lf\n", totalRevenue);
+    printf("\tAverage Payable per Patient : %.2lf\n", totalRevenue/patientCount);
+    printf("\n\t=========================================\n");
 }
