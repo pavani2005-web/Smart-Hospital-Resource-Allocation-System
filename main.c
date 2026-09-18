@@ -26,6 +26,7 @@ int patientCount = 0;
 int displaySpecialtyID();
 void registerNewPatient();
 void viewPatientsRecords();
+void displayBillingAndReport();
 
 int main()
 {
@@ -52,7 +53,7 @@ int main()
                 viewPatientsRecords();
                 break;
             case 3:
-                printf("\n[System] Analytics coming soon!\n");
+                displayBillingAndReport();
                 break;
             case 4:
                 printf("\nExiting system. Goodbye!\n");
@@ -176,4 +177,34 @@ void viewPatientsRecords()
 
   }
 }
+}
+void displayBillingAndReport()
+{
+    if (patientCount == 0)
+    {
+        printf(" No patients records\n");
+        return;
+    }
+    double totalRevenue = 0.0;
+    double totalDiscounts = 0.0;
+    double totalSurcharges = 0.0;
+    int totalAdmitted = 0.0;
+
+    for ( int i = 0; i < patientCount; i++)
+    {
+        totalRevenue += patients[i].finalPayable;
+        totalDiscounts += patients[i].discount;
+        totalSurcharges += patients[i].emergencySurcharge;
+        if (patients[i].isAdmitted == 1 )
+            {
+                totalAdmitted++;
+                }
+    }
+    printf(" Final report\n");
+    printf("Total Patients Registered: %d\n", patientCount);
+    printf("Total Admitted Patients: %d\n", totalAdmitted);
+    printf("Total outpatients: %d\n", patientCount - totalAdmitted);
+    printf("Total Surcharges & Discounts: %.2lf  %.2lf\n", totalSurcharges, totalDiscounts);
+    printf("Total Net Revenue: %.2lf\n", totalRevenue);
+    printf("Average Payable per Patient: %.2lf\n", totalRevenue/patientCount);
 }
