@@ -69,14 +69,26 @@ int main()
 int displaySpecialtyID()
 {
     int choice = 0;
-    printf(" 1. General Practice (OPD) - LKR 1500.00\n");
-    printf(" 2. Paediatrics            - LKR 2500.00\n");
-    printf(" 3. Cardiology             - LKR 4500.00\n");
-    printf(" 4. Neurology              - LKR 5000.00\n");
-    scanf("%d", &choice);
-    return choice;
+    do {
+            printf(" 1. General Practice (OPD) - LKR 1500.00\n");
+            printf(" 2. Paediatrics            - LKR 2500.00\n");
+            printf(" 3. Cardiology             - LKR 4500.00\n");
+            printf(" 4. Neurology              - LKR 5000.00\n");
 
+    if (scanf("%d", &choice) != 1) {
+            printf("\n[Error] Please enter a valid number!\n\n");
+            while (getchar() != '\n');
+            choice = 0;
+        }
+        else if (choice < 1 || choice > 4) {
+            printf("\n[Error] Invalid choice! Choose between 1 and 4.\n\n");
+        }
+    }
+     while (choice < 1 || choice > 4);
+
+    return choice;
 }
+
 void registerNewPatient()
 {
     if (patientCount >= 100)
