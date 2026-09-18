@@ -42,8 +42,13 @@ int main()
         printf("\t4. Exit System\n");
         printf("\t==================================================\n");
         printf("\n\tEnter choice (1-4): ");
-        scanf("%d", &choice);
 
+        if (scanf("%d", &choice) != 1) {
+            printf("\n\t[Error] Invalid input! Please enter a number.\n");
+            while (getchar() != '\n');
+            choice = 0;
+            continue;
+        }
         switch (choice) {
             case 1:
                 registerNewPatient();
@@ -62,10 +67,13 @@ int main()
             default:
                 printf("\n\n\t[Error] Invalid choice! Try again.\n");
         }
-    } while (choice != 4);
+   }  while (choice != 4);
 
     return 0;
 }
+
+
+
 int displaySpecialtyID()
 {
     int choice = 0;
