@@ -77,7 +77,7 @@ int main()
                 break;
             default:
                 printf("\n\n\tError. Invalid choice. Try again.\n");
-        }
+          }
    }  while (choice != 4);
 
     return 0;
@@ -307,7 +307,7 @@ void registerNewPatient()
             printf("Urgency level: Uregent\n");
         else if (p.urgencyLevel == 3)
             printf("Urgency level : Critical\n");
-    printf("\tBase Consultation Fee  : Rs. %.2f\n", p.baseFee);
+    printf("\tBase Consultation Fee  : LKR %.2f\n", p.baseFee);
     printf("\tEmergency Surcharge    : Rs. %.2f\n", p.emergencySurcharge);
     printf("\tWard Stay Cost (%d Days): Rs. %.2f\n", p.admittedDays, p.wardCost);
     printf("\tGross Total Bill       : Rs. %.2f\n", p.grossTotal);
@@ -322,6 +322,7 @@ void viewPatientsRecords()
     if (patientCount == 0)
     {
         printf("No patient records found\n");
+        return;
     }
   else
   {
@@ -407,11 +408,11 @@ void displayBillingAndReport()
             for (int b = 0; b < wardCapacities[w]; b++) {
                 if (bedOccupancy[w][b] == 1) {
                     occupiedCount++;
-                }
+            }
             }
     double percentage = ((double)occupiedCount / wardCapacities[w]) * 100.0;
 
-    printf("\t - %s Ward      : %d/%d (%.1f%%)\n",wardNames[w], occupiedCount, wardCapacities[w], percentage);
+    printf("\t  %s Ward      : %d/%d (%.1f%%)\n",wardNames[w], occupiedCount, wardCapacities[w], percentage);
     printf("\tTotal Surcharges & Discounts: %.2lf  %.2lf\n", totalSurcharges, totalDiscounts);
     printf("\tTotal Net Revenue           : %.2lf\n", totalRevenue);
     printf("\tAverage Payable per Patient : %.2lf\n", totalRevenue/patientCount);
