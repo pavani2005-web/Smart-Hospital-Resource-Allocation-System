@@ -110,13 +110,20 @@ void registerNewPatient()
     }
     struct patientDetails p;
     printf("\n\tEnter Patient ID  : ");
-    scanf("%s", p.patientID);
+    scanf(" %[^\n]", p.patientID);
 
     printf("\tEnter Patient Name: ");
-    scanf("%s", p.patientFullName);
+    scanf(" %[^\n]", p.patientFullName);
 
+   do {
     printf("\tEnter Age         : ");
-    scanf("%d", &p.patientAge);
+    if (scanf("%d", &p.patientAge) != 1) {
+        printf("\n\t[Error] Enter a valid number!\n");
+        while (getchar() != '\n');
+        p.patientAge = -1;
+    }
+    } while (p.patientAge < 0 || p.patientAge > 120);
+
 
     do {
     printf("\n\t  Urgency Level\n");
