@@ -135,7 +135,7 @@ void registerNewPatient()
 
     p.specialtyID = displaySpecialtyID();
 
-    switch (p.specialtyID) {
+     switch (p.specialtyID) {
         case 1: p.baseFee = 1500.00; break;
         case 2: p.baseFee = 2500.00; break;
         case 3: p.baseFee = 4500.00; break;
@@ -149,18 +149,37 @@ void registerNewPatient()
     } else {
         p.emergencySurcharge = 0.00;
     }
-
-    // 3. Ward Admission
+    do {
     printf("\n\tIs Patient Admitted to Ward? (1 = Yes, 0 = No): ");
-    scanf("%d", &p.isAdmitted);
+    if (scanf("%d", &p.isAdmitted) != 1) {
+            printf("\n\t[Error] Invalid input! Enter 1 or 0.\n");
+            while (getchar() != '\n');
+            p.isAdmitted = -1;
+    }
+
+    } while (p.isAdmitted != 0 && p.isAdmitted != 1);
 
     if (p.isAdmitted == 1) {
+        do {
         printf("\n\t   Ward details\n");
         printf("\t1-General: 3000/day \n\t2-Paediatric: 6000/day \n\t3-Surgical: 12000/day \n\t4-ICU: 25000/day\n");
         printf("\n\tSelect Ward : ");
-        scanf("%d", &p.wardID);
+
+        if (scanf("%d", &p.wardID) != 1) {
+                printf("\n\t[Error] Enter a valid number!\n");
+                while (getchar() != '\n');
+                p.wardID = 0;
+            }
+        } while (p.wardID < 1 || p.wardID > 4);
+
+        do {
         printf("\tEnter Days Admitted: ");
-        scanf("%d", &p.admittedDays);
+        if (scanf("%d", &p.admittedDays) != 1) {
+                printf("\n\t[Error] Enter a valid number!\n");
+                while (getchar() != '\n');
+                p.admittedDays = 0;
+            }
+        } while (p.admittedDays <= 0);
 
         double dailyRate = 0.0;
         if (p.wardID == 1) dailyRate = 3000.00;
