@@ -118,10 +118,20 @@ void registerNewPatient()
     printf("\tEnter Age         : ");
     scanf("%d", &p.patientAge);
 
+    do {
     printf("\n\t  Urgency Level\n");
     printf("\t1 = Normal \n\t2 = Urgent \n\t3 = Critical");
     printf("\n\tEnter Urgency Level (1 - 3): ");
-    scanf("%d", &p.urgencyLevel);
+
+    if (scanf("%d", &p.urgencyLevel) != 1) {
+            while (getchar() != '\n');
+            p.urgencyLevel = 0;
+        }
+        if (p.urgencyLevel < 1 || p.urgencyLevel > 3) {
+            printf("\n\t[Error] Invalid choice! .\n");
+        }
+
+    } while (p.urgencyLevel < 1 || p.urgencyLevel > 3);
 
     p.specialtyID = displaySpecialtyID();
 
