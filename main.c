@@ -276,59 +276,60 @@ void registerNewPatient()
            (p.patientAge < 5 || p.patientAge > 65) ? "(15% Subsidy Eligible)" : "");
     switch (p.specialtyID) {
     case 1:
-        printf("\tSpecialty : General Practice\n");
+        printf("\tSpecialty              : General Practice\n");
         break;
     case 2:
-        printf("\tSpecialty : Paediatrics\n");
+        printf("\tSpecialty              : Paediatrics\n");
         break;
     case 3:
-        printf("\tSpecialty: Cardiology\n");
+        printf("\tSpecialty              : Cardiology\n");
         break;
     case 4:
-        printf("\tSpecialty : Neurology\n");
+        printf("\tSpecialty              : Neurology\n");
         break;
     default:
-        printf("\tSpecialty : General Practice\n");
+        printf("\tSpecialty              : General Practice\n");
         break;
 }
     if (p.isAdmitted) {
         if (p.wardID == 1) {
-            printf("\tAssigned Ward : General Ward (Bed #%02d)\n", p.bedNumber);
+            printf("\tAssigned Ward          : General Ward (Bed #%02d)\n", p.bedNumber);
     } else if (p.wardID == 2) {
-            printf("\tAssigned Ward : Paediatric Ward (Bed #%02d)\n", p.bedNumber);
+            printf("\tAssigned Ward          : Paediatric Ward (Bed #%02d)\n", p.bedNumber);
     } else if (p.wardID == 3) {
-            printf("\tAssigned Ward : Surgical Ward (Bed #%02d)\n", p.bedNumber);
+            printf("\tAssigned Ward          : Surgical Ward (Bed #%02d)\n", p.bedNumber);
     } else if (p.wardID == 4) {
-            printf("\tAssigned Ward: ICU (Bed #%02d)\n", p.bedNumber);
+            printf("\tAssigned Ward          : ICU (Bed #%02d)\n", p.bedNumber);
     }
     } else {
-    printf("\tAssigned Ward          : Outpatient / OPD\n");
+            printf("\tAssigned Ward          : Outpatient / OPD\n");
 }
         if (p.urgencyLevel == 1)
-            printf("Urgency level: Level 1 (Normal)\n");
+            printf("\tUrgency level          : Level 1 (Normal)\n");
         else if (p.urgencyLevel == 2)
-            printf("Urgency level: Level 2 (Urgent)\n");
+            printf("\tUrgency level          : Level 2 (Urgent)\n");
         else if (p.urgencyLevel == 3)
-            printf("Urgency level : Level 3 (Critical)\n");
-    printf("\tBase Consultation Fee  : LKR %.2f\n", p.baseFee);
+            printf("\tUrgency level          : Level 3 (Critical)\n");
+
+        printf("\tBase Consultation Fee  : LKR %.2f\n", p.baseFee);
     if (p.urgencyLevel == 2)
         printf("\tEmergency Surcharge    : LKR %.2f (20%%)\n", p.emergencySurcharge);
     else if (p.urgencyLevel == 3)
         printf("\tEmergency Surcharge    : LKR %.2f (50%%)\n", p.emergencySurcharge);
     else
-        printf("Emergency Surcharge : LKR 0.00\n");
+        printf("\tEmergency Surcharge    : LKR 0.00\n");
 
-    printf("\tWard Stay Cost (%d Days): LKR %.2f\n", p.admittedDays, p.wardCost);
-    printf("\tGross Total Bill       : LKR %.2f\n", p.grossTotal);
+        printf("\tWard Stay Cost (%d Days): LKR %.2f\n", p.admittedDays, p.wardCost);
+        printf("\tGross Total Bill       : LKR %.2f\n", p.grossTotal);
     if (p.discount > 0)
         printf("\tAge Subsidy Discount   : LKR -%.2f (15%%)\n", p.discount);
     else
-    printf("\tAge Subsidy Discount   : LKR 0.00\n");
-    printf("\tFinal Payable Amount   : LKR %.2f\n", p.finalPayable);
+        printf("\tAge Subsidy Discount   : LKR 0.00\n");
+        printf("\tFinal Payable Amount   : LKR %.2f\n", p.finalPayable);
     if (p.waitTime == 0.0f)
-        printf("\tWaiting Time : %.2f mins (Immediate Attention)\n", p.waitTime);
+        printf("\tWaiting Time           : %.2f mins (Immediate Attention)\n", p.waitTime);
     else
-        printf("\tWaiting Time : %.2f mins\n", p.waitTime);
+        printf("\tWaiting Time           : %.2f mins\n", p.waitTime);
     printf("\t==================================================\n");
 }
 
@@ -336,7 +337,7 @@ void viewPatientsRecords()
 {
     if (patientCount == 0)
     {
-        printf("No patient records found\n");
+        printf("\tNo patient records found\n");
         return;
     }
   else
@@ -346,17 +347,17 @@ void viewPatientsRecords()
         printf("\n\t=========================================\n");
         printf("\t        Registered patients records ");
         printf("\n\t=========================================\n");
-        printf("\tPatient number  : %d\n", i + 1);
-        printf("\tPatient ID      : %s\n", patients[i].patientID);
-        printf("\tPatient Name    : %s\n", patients[i].patientFullName);
-        printf("\tAge             : %d Years\n", patients[i].patientAge);
-        printf("\tUrgency Level   : %d\n", patients[i].urgencyLevel);
-        printf("\tBase Consultation Fee: LKR %.2f\n", patients[i].baseFee);
-        printf("\tEmergency Surcharge  : LKR %.2f\n", patients[i].emergencySurcharge);
+        printf("\tPatient number          : %d\n", i + 1);
+        printf("\tPatient ID              : %s\n", patients[i].patientID);
+        printf("\tPatient Name            : %s\n", patients[i].patientFullName);
+        printf("\tAge                     : %d Years\n", patients[i].patientAge);
+        printf("\tUrgency Level           : %d\n", patients[i].urgencyLevel);
+        printf("\tBase Consultation Fee   : LKR %.2f\n", patients[i].baseFee);
+        printf("\tEmergency Surcharge     : LKR %.2f\n", patients[i].emergencySurcharge);
         printf("\tWard Stay Cost (%d Days): LKR %.2f\n", patients[i].admittedDays, patients[i].wardCost);
-        printf("\tGross Total Bill     : LKR %.2f\n", patients[i].grossTotal);
-        printf("\tAge Subsidy Discount : LKR %.2f\n", patients[i].discount);
-        printf("\tFinal Amount Payable : LKR %.2f\n", patients[i].finalPayable);
+        printf("\tGross Total Bill        : LKR %.2f\n", patients[i].grossTotal);
+        printf("\tAge Subsidy Discount    : LKR %.2f\n", patients[i].discount);
+        printf("\tFinal Amount Payable    : LKR %.2f\n", patients[i].finalPayable);
 
   }
 }
