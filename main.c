@@ -101,6 +101,9 @@ int displaySpecialtyID()
         else if (choice < 1 || choice > 4) {
             printf("\n\n\tError. Invalid choice.\n\n");
         }
+        else if (specialtyQueue[choice - 1] >= specialtyDailyCaps[choice - 1]) {
+            printf("\tLimit reached. Specialty is full for today.\n");
+            choice = 0;}
     }
      while (choice < 1 || choice > 4);
 
@@ -290,30 +293,42 @@ void registerNewPatient()
 }
     if (p.isAdmitted) {
         if (p.wardID == 1) {
-            printf("\tAssigned Ward : General Ward (Bed %2d)\n", p.bedNumber);
+            printf("\tAssigned Ward : General Ward (Bed #%02d)\n", p.bedNumber);
     } else if (p.wardID == 2) {
-            printf("\tAssigned Ward : Paediatric Ward (Bed %2d)\n", p.bedNumber);
+            printf("\tAssigned Ward : Paediatric Ward (Bed #%02d)\n", p.bedNumber);
     } else if (p.wardID == 3) {
-            printf("\tAssigned Ward : Surgical Ward (Bed %2d)\n", p.bedNumber);
+            printf("\tAssigned Ward : Surgical Ward (Bed #%02d)\n", p.bedNumber);
     } else if (p.wardID == 4) {
-            printf("\tAssigned Ward: ICU (Bed %2d)\n", p.bedNumber);
+            printf("\tAssigned Ward: ICU (Bed #%02d)\n", p.bedNumber);
     }
     } else {
     printf("\tAssigned Ward          : Outpatient / OPD\n");
 }
         if (p.urgencyLevel == 1)
-            printf("Urgency level: Normal\n");
+            printf("Urgency level: Level 1 (Normal)\n");
         else if (p.urgencyLevel == 2)
-            printf("Urgency level: Uregent\n");
+            printf("Urgency level: Level 2 (Urgent)\n");
         else if (p.urgencyLevel == 3)
-            printf("Urgency level : Critical\n");
+            printf("Urgency level : Level 3 (Critical)\n");
     printf("\tBase Consultation Fee  : LKR %.2f\n", p.baseFee);
-    printf("\tEmergency Surcharge    : Rs. %.2f\n", p.emergencySurcharge);
-    printf("\tWard Stay Cost (%d Days): Rs. %.2f\n", p.admittedDays, p.wardCost);
-    printf("\tGross Total Bill       : Rs. %.2f\n", p.grossTotal);
-    printf("\tAge Subsidy Discount   : Rs. -%.2f\n", p.discount);
-    printf("\tFinal Payable Amount   : Rs. %.2f\n", p.finalPayable);
-    printf("\tEstimated Waiting Time : %.2f mins\n", p.waitTime);
+    if (p.urgencyLevel == 2)
+        printf("\tEmergency Surcharge    : LKR %.2f (20%%)\n", p.emergencySurcharge);
+    else if (p.urgencyLevel == 3)
+        printf("\tEmergency Surcharge    : LKR %.2f (50%%)\n", p.emergencySurcharge);
+    else
+        printf("Emergency Surcharge : LKR 0.00\n");
+
+    printf("\tWard Stay Cost (%d Days): LKR %.2f\n", p.admittedDays, p.wardCost);
+    printf("\tGross Total Bill       : LKR %.2f\n", p.grossTotal);
+    if (p.discount > 0)
+        printf("\tAge Subsidy Discount   : LKR -%.2f (15%%)\n", p.discount);
+    else
+    printf("\tAge Subsidy Discount   : LKR 0.00\n");
+    printf("\tFinal Payable Amount   : LKR %.2f\n", p.finalPayable);
+    if (p.waitTime == 0.0f)
+        printf("\tWaiting Time : %.2f mins (Immediate Attention)\n", p.waitTime);
+    else
+        printf("\tWaiting Time : %.2f mins\n", p.waitTime);
     printf("\t==================================================\n");
 }
 
@@ -336,13 +351,12 @@ void viewPatientsRecords()
         printf("\tPatient Name    : %s\n", patients[i].patientFullName);
         printf("\tAge             : %d Years\n", patients[i].patientAge);
         printf("\tUrgency Level   : %d\n", patients[i].urgencyLevel);
-        printf("\tBase Bill Amount: Rs. %.2f\n", patients[i].finalPayable);
-        printf("\tBase Consultation Fee: Rs. %.2f\n", patients[i].baseFee);
-        printf("\tEmergency Surcharge  : Rs. %.2f\n", patients[i].emergencySurcharge);
-        printf("\tWard Stay Cost       : Rs. %.2f \n", patients[i].wardCost, patients[i].admittedDays);
-        printf("\tGross Total Bill     : Rs. %.2f\n", patients[i].grossTotal);
-        printf("\tAge Subsidy Discount : Rs. %.2f\n", patients[i].discount);
-        printf("\tFinal Amount Payable : Rs. %.2f\n", patients[i].finalPayable);
+        printf("\tBase Consultation Fee: LKR %.2f\n", patients[i].baseFee);
+        printf("\tEmergency Surcharge  : LKR %.2f\n", patients[i].emergencySurcharge);
+        printf("\tWard Stay Cost (%d Days): LKR %.2f\n", patients[i].admittedDays, patients[i].wardCost);
+        printf("\tGross Total Bill     : LKR %.2f\n", patients[i].grossTotal);
+        printf("\tAge Subsidy Discount : LKR %.2f\n", patients[i].discount);
+        printf("\tFinal Amount Payable : LKR %.2f\n", patients[i].finalPayable);
 
   }
 }
@@ -413,12 +427,13 @@ void displayBillingAndReport()
     double percentage = ((double)occupiedCount / wardCapacities[w]) * 100.0;
 
     printf("\t  %s Ward      : %d/%d (%.1f%%)\n",wardNames[w], occupiedCount, wardCapacities[w], percentage);
+    }
     printf("\tTotal Surcharges & Discounts: %.2lf  %.2lf\n", totalSurcharges, totalDiscounts);
     printf("\tTotal Net Revenue           : %.2lf\n", totalRevenue);
     printf("\tAverage Payable per Patient : %.2lf\n", totalRevenue/patientCount);
     printf("\n\tHighest-Paying Patient      : %s (%s)\n",patients[highestIndex].patientFullName, patients[highestIndex].patientID);
-    printf("\tHighest Bill Amount         : Rs. %.2f\n", patients[highestIndex].finalPayable);
+    printf("\tHighest Bill Amount         : LKR %.2f\n", patients[highestIndex].finalPayable);
     printf("\n\t=========================================\n");
 }
-}
+
 
